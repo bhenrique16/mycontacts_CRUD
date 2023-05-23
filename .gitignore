@@ -1,0 +1,26 @@
+# Arquivos gerados pelo sistema operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos de log
+*.log
+
+# Diretórios
+logs/
+temp/
+
+# Arquivos de configuração
+config.ini
+config.secret.ini
+
+# Dependências ou diretórios de build
+/node_modules/
+/build/
+
+# Arquivos de saída
+dist/
+bin/
+
+# Arquivos de credenciais
+credentials.json
+api_key.txt
