@@ -2,13 +2,18 @@
 const db = require('../../database/index');
 
 
-
 class ContactsRepository {
-	async findAll(orderBy) {
-		const rows = await db.query(
-			`SELECT * FROM contacts ORDER BY name ${orderBy}`
-		);
-		return rows;
+	async findAll(orderBy = 'ASC') {
+	  const direction = orderBy.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
+
+	  const rows = await db.query(`
+	   SELECT contacts.*, categories.name AS category_name
+	   FROM contacts
+	   LEFT JOIN categories ON categories.id = contacts.category_id
+	   ORDER BY contacts.name ${direction}
+	   `);
+
+	  return rows;
 	}
 
 	async findById(id) {
@@ -33,20 +38,14 @@ class ContactsRepository {
 		return row;
 	}
 
-	update(id, { name, email, phone, category_id }) {
-		return new Promise((resolve) => {
-			const updatedContact = {
-				id: v4(),
-				name,
-				email,
-				phone,
-				category_id,
-			};
-			contacts = contacts.map((contact) =>
-				contact.id === id ? updatedContact : contact
-			);
-			resolve(updatedContact);
-		});
+	async update(id, {
+		name, email, phone, category_id }) {
+		const [row] = await db.query(`UPDATE contacts
+		SET name = $1, email = $2, phone = $3,category_id = $4
+		WHERE id = $5
+		RETURNING *`,[name,email,phone,category_id,id])
+
+		return row
 	}
 	async delete (id){
 		const deleteOp = await db.query('DELETE FROM contacts WHERE id = $1',[id]);
@@ -57,3 +56,4 @@ class ContactsRepository {
 
 
 module.exports = new ContactsRepository();
+
