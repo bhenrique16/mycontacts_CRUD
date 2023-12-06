@@ -46,8 +46,8 @@ class ContactController {
 		response.json(contact);
 	}
 
+	// editar um registro
 	async update(request, response) {
-		// editar um registro
 		const { id } = request.params;
 		const { name, email, phone, category_id } = request.body;
 		const contactExists = await ContactRepository.findById(id);
