@@ -1,10 +1,13 @@
-import { Container, Header, ListContainer, Card } from "./styles";
+import { Container, Header, ListContainer, Card, InputSearchContainer } from "./styles";
 import arrow from "../../assets/images/icon/arrow.svg";
 import edit from "../../assets/images/icon/edit.svg";
 import trash from "../../assets/images/icon/trash.svg";
-export default function ContactsList() {
+export default function Home() {
   return (
     <Container>
+      <InputSearchContainer>
+        <input type="text" placeholder="Pesquise pelo nome" />
+      </InputSearchContainer>
       <Header>
         <strong>3 contatos</strong>
         <a href="/">Novo contato</a>
@@ -80,5 +83,5 @@ export default function ContactsList() {
         </Card>
       </ListContainer>
     </Container>
-  );
-}
+  )
+};
