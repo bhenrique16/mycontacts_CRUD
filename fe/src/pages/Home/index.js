@@ -1,7 +1,7 @@
 import { Container, Header, ListContainer, Card, InputSearchContainer } from "./styles";
-import arrow from "../../assets/images/icon/arrow.svg";
-import edit from "../../assets/images/icon/edit.svg";
-import trash from "../../assets/images/icon/trash.svg";
+import arrow from "../../assets/images/icons/arrow.svg";
+import edit from "../../assets/images/icons/edit.svg";
+import trash from "../../assets/images/icons/trash.svg";
 export default function Home() {
   return (
     <Container>
