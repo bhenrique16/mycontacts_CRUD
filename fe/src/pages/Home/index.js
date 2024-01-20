@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 import { Container, Header, ListContainer, Card, InputSearchContainer } from "./styles";
 import arrow from "../../assets/images/icons/arrow.svg";
 import edit from "../../assets/images/icons/edit.svg";
@@ -10,7 +12,7 @@ export default function Home() {
       </InputSearchContainer>
       <Header>
         <strong>3 contatos</strong>
-        <a href="/">Novo contato</a>
+        <Link to="/new">Novo contato</Link>
       </Header>
 
       <ListContainer>
@@ -32,55 +34,16 @@ export default function Home() {
           </div>
 
           <div className="actions">
-            <a href="">
+            <Link to="/edit/123">
               <img src={edit} alt="edit" />
-            </a>
+            </Link>
 
             <button>
               <img src={trash} alt="Delete" />
             </button>
           </div>
         </Card>
-        <Card>
-          <div className="info">
-            <div className="contact-name">
-              <strong>Bruno Henrique</strong>
-              <small>instagram</small>
-            </div>
-            <span>bruno@bh.com.br</span>
-            <span>(61)9999-9999</span>
-          </div>
 
-          <div className="actions">
-            <a href="">
-              <img src={edit} alt="edit" />
-            </a>
-
-            <button>
-              <img src={trash} alt="Delete" />
-            </button>
-          </div>
-        </Card>
-        <Card>
-          <div className="info">
-            <div className="contact-name">
-              <strong>Bruno Henrique</strong>
-              <small>instagram</small>
-            </div>
-            <span>bruno@bh.com.br</span>
-            <span>(61)9999-9999</span>
-          </div>
-
-          <div className="actions">
-            <a href="">
-              <img src={edit} alt="edit" />
-            </a>
-
-            <button>
-              <img src={trash} alt="Delete" />
-            </button>
-          </div>
-        </Card>
       </ListContainer>
     </Container>
   )
