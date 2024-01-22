@@ -10,7 +10,7 @@ import Loader from '../../components/Loader';
 export default function Home() {
   return (
     <Container>
-      <Loader />
+      {/* <Loader /> */}
       {/* <Modal danger /> */}
       <InputSearchContainer>
         <input type="text" placeholder="Pesquise pelo nome" />
