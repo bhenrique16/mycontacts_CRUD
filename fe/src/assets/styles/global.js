@@ -5,7 +5,7 @@ export default createGlobalStyle`
 *{
   margin:0;
   padding:0;
-  border:border-box;
+  box-sizing:border-box;
   font-family: 'Sora',sans-serif;
 
 }
