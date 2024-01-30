@@ -55,15 +55,9 @@ export default function Home() {
 };
 
 
-fetch('http://localhost:3001/contacts', {
-  method: 'GET',
-  headers: new Headers({
-    'X-App-ID': '123',
-  }),
-})
+fetch('http://localhost:3001/contacts')
   .then((response) => {
     console.log('response', response);
-
   })
   .catch((error) => {
     console.log('erro', error);
