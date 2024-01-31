@@ -6,8 +6,22 @@ import edit from "../../assets/images/icons/edit.svg";
 import trash from "../../assets/images/icons/trash.svg";
 import Modal from '../../components/Modal';
 import Loader from '../../components/Loader';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
+  const [contacts, setContacts] = useState([])
+  useEffect(() => {
+    fetch('http://localhost:3001/contacts')
+      .then(async (response) => {
+        const json = await response.json();
+        setContacts(json)
+
+      })
+      .catch((error) => {
+        console.log('erro', error)
+      })
+  }, [])
+  console.log(contacts);
   return (
     <Container>
       {/* <Loader /> */}
@@ -16,7 +30,9 @@ export default function Home() {
         <input type="text" placeholder="Pesquise pelo nome" />
       </InputSearchContainer>
       <Header>
-        <strong>3 contatos</strong>
+        <strong>
+          {contacts.length}
+          {contacts.length > 1 ? ' contatos' : ' contato'} </strong>
         <Link to="/new">Novo contato</Link>
       </Header>
 
@@ -55,10 +71,3 @@ export default function Home() {
 };
 
 
-fetch('http://localhost:3001/contacts')
-  .then((response) => {
-    console.log('response', response);
-  })
-  .catch((error) => {
-    console.log('erro', error);
-  })
