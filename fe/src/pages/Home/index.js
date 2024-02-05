@@ -6,24 +6,38 @@ import edit from "../../assets/images/icons/edit.svg";
 import trash from "../../assets/images/icons/trash.svg";
 import Modal from '../../components/Modal';
 import Loader from '../../components/Loader';
-import { useEffect, useState } from 'react';
+
+import { useEffect, useState, useMemo } from 'react';
+import delay from '../../utils/delay';
 
 export default function Home() {
   const [contacts, setContacts] = useState([])
   const [orderBy, setOrderBy] = useState('asc')
   const [searchTerm, setSearchTerm] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
 
-  const filteredContacts = contacts.filter((contact) => (
-    contact.name.toLowerCase().startsWith(searchTerm.toLowerCase())
-  ))
+  const filteredContacts = useMemo(() => {
+    return contacts.filter((contact) => (
+      contact.name.toLowerCase().startsWith(searchTerm.toLowerCase())
+    ))
+  }, [contacts, searchTerm])
+
+
   useEffect(() => {
+    setIsLoading(true)
+
     fetch(`http://localhost:3001/contacts?orderBy=${orderBy}`)
       .then(async (response) => {
+        await delay(500);
+
         const json = await response.json();
         setContacts(json)
       })
       .catch((error) => {
         console.log('erro', error)
+      })
+      .finally(() => {
+        setIsLoading(false)
       })
   }, [orderBy])
 
@@ -40,7 +54,7 @@ export default function Home() {
 
   return (
     <Container>
-      {/* <Loader /> */}
+      <Loader isLoading={isLoading} />
       {/* <Modal danger /> */}
       <InputSearchContainer>
         <input
