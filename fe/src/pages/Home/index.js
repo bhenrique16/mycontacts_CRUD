@@ -44,18 +44,24 @@ export default function Home() {
           </button>
         </header>
 
-        <Card>
+
+
+      </ListContainer>
+      {contacts.map((contact) => (
+        <Card key={contact.id}>
           <div className="info">
             <div className="contact-name">
-              <strong>Bruno Henrique</strong>
-              <small>instagram</small>
+              <strong>{contact.name}</strong>
+              {contact.category_name && (
+                <small>{contact.category_name}</small>
+              )}
             </div>
-            <span>bruno@bh.com.br</span>
-            <span>(61)9999-9999</span>
+            <span>{contact.email}</span>
+            <span>{contact.phone}</span>
           </div>
 
           <div className="actions">
-            <Link to="/edit/123">
+            <Link to={`/edit/${contact.id}`}>
               <img src={edit} alt="edit" />
             </Link>
 
@@ -64,8 +70,7 @@ export default function Home() {
             </button>
           </div>
         </Card>
-
-      </ListContainer>
+      ))}
     </Container>
   )
 };
