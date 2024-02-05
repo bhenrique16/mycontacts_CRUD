@@ -49,14 +49,13 @@ a{
 }
 `;
 
-export const ListContainer = styled.div`
+export const ListHeader = styled.header`
 margin-top: 24px;
 
 
-header{
   margin-bottom: 8px;
 
-  .sort-button{
+  button{
   background: transparent;
   border: none;
   display: flex;
@@ -67,6 +66,10 @@ header{
     font-weight: bold;
     color: ${({ theme }) => theme.colors.primary.main} ;
    }
+   img{
+    transform: ${({ orderBy }) => (orderBy === 'asc' ? 'rotate(180deg)' : 'rotate(0deg)')};
+    transition:transform 0.2s ease-in;
+
  }
 }
 `;
