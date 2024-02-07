@@ -24,21 +24,26 @@ export default function Home() {
 
 
   useEffect(() => {
-    setIsLoading(true)
-
-    fetch(`http://localhost:3001/contacts?orderBy=${orderBy}`)
-      .then(async (response) => {
-        await delay(500);
+    async function loadContacts() {
+      try {
+        setIsLoading(true)
+        const response = await
+          fetch(`http://localhost:3001/contacts?orderBy=${orderBy}`,)
+        await delay(500)
 
         const json = await response.json();
         setContacts(json)
-      })
-      .catch((error) => {
-        console.log('erro', error)
-      })
-      .finally(() => {
+
+      }
+      catch (error) {
+        console.log('erro', error);
+      } finally {
         setIsLoading(false)
-      })
+      }
+
+    }
+    loadContacts()
+
   }, [orderBy])
 
 
