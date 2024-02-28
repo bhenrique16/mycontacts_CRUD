@@ -33,14 +33,15 @@ export default function Home() {
 
         const contactsList = await ContactsService.listContacts(orderBy)
 
+
         setContacts(contactsList)
 
-      }
-      catch (error) {
-        console.log('erro', error);
+      } catch (error) {
+        console.log('Caiu no catch', error);
       } finally {
         setIsLoading(false)
       }
+
 
     }
     loadContacts()
