@@ -37,7 +37,11 @@ export default function Home() {
         setContacts(contactsList)
 
       } catch (error) {
-        console.log('Caiu no catch', error);
+        console.log('Name :', error.name);
+        console.log('Message :', error.message);
+        console.log('Response :', error.response);
+        console.log('Body :', error.body);
+        console.log(error);
       } finally {
         setIsLoading(false)
       }
@@ -77,9 +81,6 @@ export default function Home() {
           {filteredContacts.length > 1 ? ' contatos' : ' contato'} </strong>
         <Link to="/new">Novo contato</Link>
       </Header>
-
-
-
 
       {filteredContacts.length > 0 && (
         <ListHeader orderBy={orderBy}>
