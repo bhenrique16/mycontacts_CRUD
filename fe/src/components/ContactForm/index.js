@@ -1,9 +1,10 @@
-import PropTypes from 'prop-types';
-import { useState } from "react";
+import PropTypes, { func } from "prop-types";
+import { useEffect, useState } from "react";
 
-import isEmailValid from './../../utils/isEmailValid';
-import formatPhone from './../../utils/formatPhone';
-import useErrors from '../../hooks/useErrors';
+import isEmailValid from "./../../utils/isEmailValid";
+import formatPhone from "./../../utils/formatPhone";
+import useErrors from "../../hooks/useErrors";
+import CategoriesService from "../../services/CategoriesService";
 import { Form, ButtonContainer } from "./styles";
 
 import FormGroup from "../FormGroup";
@@ -11,85 +12,98 @@ import Input from "../Input";
 import Select from "../Select";
 import Button from "../Button";
 
-
 export default function ContactForm({ buttonLabel }) {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [phone, setPhone] = useState('')
-  const [category, setCategory] = useState('')
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [categoryId, setCategoryId] = useState("");
+  const [categories, setCategories] = useState([]);
 
+  const { setError, removeError, getErrorMessageByFieldName, errors } =
+    useErrors();
 
-  const { setError, removeError, getErrorMessageByFieldName, errors } = useErrors()
+  const isFormValid = name && errors.length === 0;
 
-  const isFormValid = (name && errors.length === 0);
+  useEffect(() => {
+    async function loadCategories() {
+      const catedoriesList = await CategoriesService.listCategories();
+      setCategories(catedoriesList);
+    }
+    loadCategories();
+  }, []);
 
   function handleNameChange(event) {
     setName(event.target.value);
 
     if (!event.target.value) {
-      setError({ field: 'name', message: 'Nome é obrigatorio.' })
+      setError({ field: "name", message: "Nome é obrigatorio." });
     } else {
-      removeError('name')
+      removeError("name");
     }
   }
 
   function handleEmailChange(event) {
-    setEmail(event.target.value)
+    setEmail(event.target.value);
 
     if (event.target.value && !isEmailValid(event.target.value)) {
-      setError({ field: 'email', message: 'Email invalido' },)
+      setError({ field: "email", message: "Email invalido" });
     } else {
-      removeError('email')
+      removeError("email");
     }
   }
   function handlePhoneChange(event) {
-    setPhone(formatPhone(event.target.value))
+    setPhone(formatPhone(event.target.value));
   }
 
   function handleSubmit(event) {
     event.preventDefault();
 
     console.log({
-      name, email, phone: phone.replace(/\D/g, ''), category
+      name,
+      email,
+      phone: phone.replace(/\D/g, ""),
+      category,
     });
   }
-  console.log({ name, email, phone: phone.replace(/\D/g, ''), category });
+  console.log({ name, email, phone: phone.replace(/\D/g, ""), categoryId });
 
   return (
     <Form onSubmit={handleSubmit} noValidate>
-      <FormGroup error={getErrorMessageByFieldName('name')} >
-        <Input
-          placeholder="Nome *"
-          value={name}
-          onChange={handleNameChange}
-        />
+      <FormGroup error={getErrorMessageByFieldName("name")}>
+        <Input placeholder="Nome *" value={name} onChange={handleNameChange} />
       </FormGroup>
 
-      <FormGroup error={getErrorMessageByFieldName('email')} >
+      <FormGroup error={getErrorMessageByFieldName("email")}>
         <Input
           type="email"
-          error={getErrorMessageByFieldName('email')}
+          error={getErrorMessageByFieldName("email")}
           placeholder="Email"
           value={email}
           onChange={handleEmailChange}
-
         />
       </FormGroup>
 
-      <FormGroup >
-        <Input placeholder="Telefone"
+      <FormGroup>
+        <Input
+          placeholder="Telefone"
           value={phone}
           onChange={handlePhoneChange}
           maxLength="15"
         />
       </FormGroup>
 
-      <FormGroup >
-        <Select value={category}
-          onChange={(event) => setCategory(event.target.value)}>
-          <option value="Categoria">Categoria</option>
-          <option value="Discord">Discord</option>
-          <option value="instagram">Instagram</option>
+      <FormGroup>
+        <Select
+          value={categoryId}
+          onChange={(event) => setCategoryId(event.target.value)}
+        >
+          <option value="">Sem categoria</option>
+
+          {categories.map((categoryId) => (
+            <option key={categoryId.id} value={categoryId.id}>
+              {categoryId.name}
+            </option>
+          ))}
         </Select>
       </FormGroup>
 
@@ -99,9 +113,9 @@ export default function ContactForm({ buttonLabel }) {
         </Button>
       </ButtonContainer>
     </Form>
-  )
-};
+  );
+}
 
 ContactForm.propTypes = {
   buttonLabel: PropTypes.string.isRequired,
-}
+};
