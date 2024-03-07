@@ -1,19 +1,24 @@
 
+import Spinner from '../Spinner'
 import { Container } from './styles'
 import PropTypes from 'prop-types'
+
 
 
 export default function FormGroup({ children, error, isLoading }) {
   return (
     <Container >
-      <Container>
-        <div className='form-item'>
-          {children}
 
-          {isLoading && <div className='loader' />}
-        </div>
-        {error && <small>{error}</small>}
-      </Container>
+      <div className='form-item'>
+        {children}
+
+        {isLoading && (
+          <div className='loader'>
+            <Spinner size={16} /></div>
+        )}
+      </div>
+      {error && <small>{error}</small>}
+
     </Container>
   )
 };

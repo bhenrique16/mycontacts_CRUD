@@ -68,11 +68,11 @@ export default function ContactForm({ buttonLabel }) {
     console.log({
       name,
       email,
-      phone: phone.replace(/\D/g, ""),
+      phone,
       categoryId,
     });
   }
-  console.log({ name, email, phone: phone.replace(/\D/g, ""), categoryId });
+  console.log({ name, email, phone, categoryId });
 
   return (
     <Form onSubmit={handleSubmit} noValidate>
