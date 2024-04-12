@@ -1,6 +1,6 @@
 /* eslint-disable */
 const ContactRepository = require('../repositories/ContactsRepository');
-
+const isValidUUID = require('../utils/isValidUUID')
 class ContactController {
 	async index(request, response) {
 		// Listar todos os registros
@@ -15,6 +15,9 @@ class ContactController {
 		// Obter um registro
 		const { id } = request.params;
 
+		if (!isValidUUID(id)) {
+			return response.status(400).json({ error: 'Invalid user id' })
+		}
 		const contact = await ContactRepository.findById(id);
 
 		if (!contact) {
@@ -53,6 +56,11 @@ class ContactController {
 	async update(request, response) {
 		const { id } = request.params;
 		const { name, email, phone, category_id } = request.body;
+
+		if (!isValidUUID(id)) {
+			return response.status(400).json({ error: 'Invalid user id' })
+		}
+
 		const contactExists = await ContactRepository.findById(id);
 		if (!contactExists) {
 			return response.status(404).json({ error: 'Contact not found' });
