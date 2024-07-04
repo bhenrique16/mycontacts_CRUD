@@ -1,8 +1,6 @@
-
-import ContactForm from "../../components/ContactForm";
 import PageHeader from "../../components/PageHeader";
+import ContactForm from "../../components/ContactForm";
 import ContactsService from "../../services/ContactsService";
-
 
 export default function NewContact() {
   async function handleSubmit(formData) {
@@ -12,21 +10,20 @@ export default function NewContact() {
         email: formData.email,
         phone: formData.phone,
         category_id: formData.categoryId,
-      }
+      };
 
-      const response = await ContactsService.createContact(contact)
+      const response = await ContactsService.createContact(contact);
+
       console.log(response);
     } catch {
-      alert("Ocorreu um erro ao cadastrar o contato!")
+      alert("Ocorreu um erro ao cadastrar o contato!");
     }
   }
-  return (
 
+  return (
     <>
-      <PageHeader title="Novo contato" />
-      <ContactForm
-        buttonLabel="Cadastrar"
-        onSubmit={handleSubmit} />
+      <PageHeader title="Novo Contato" />
+      <ContactForm buttonLabel="Cadastrar" onSubmit={handleSubmit} />
     </>
-  )
-};
+  );
+}
